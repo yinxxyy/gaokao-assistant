@@ -466,14 +466,14 @@
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill" style="width:0%"></div>
                 </div>
-                <p style="text-align:center;color:var(--text-secondary);font-weight:600;" id="progress-text">0 / 60 题已完成</p>
+                <p style="text-align:center;color:var(--text-secondary);font-weight:600;" id="progress-text">0 / 144 题已完成</p>
             </div>
         </div>
         <div id="questions-container"></div>
         <div class="card" style="text-align:center;padding:36px;">
             <button class="btn btn-primary btn-lg" onclick="submitTest()" id="submit-btn" disabled>提交测试 · 查看结果</button>
             <p style="margin-top:14px;color:var(--text-secondary);font-size:0.88rem;font-weight:500;" id="submit-hint">
-                请完成全部60道题目后再提交
+                请完成全部144道题目后再提交
             </p>
         </div>
     </div>
@@ -583,9 +583,9 @@
 // ==================== 原有精选数据（用于霍兰德推荐） ====================
 
 
-// 霍兰德测试题目（60题，每个类型10题）
+// 霍兰德测试题目（144题，每个类型24题）
 var questions = [
-    // R - 现实型（1-10）
+    // ==================== R - 现实型（1-24） ====================
     {id:1,type:'R',text:'我喜欢操作机器、使用工具来修理或制作物品。'},
     {id:2,type:'R',text:'我喜欢户外工作，比如种植、养殖或建造东西。'},
     {id:3,type:'R',text:'我喜欢动手组装模型、家具或电子设备。'},
@@ -596,61 +596,145 @@ var questions = [
     {id:8,type:'R',text:'我擅长使用各种工具进行手工制作。'},
     {id:9,type:'R',text:'我对建筑工程和施工技术感兴趣。'},
     {id:10,type:'R',text:'我喜欢将损坏的物品修复好。'},
-    // I - 研究型（11-20）
-    {id:11,type:'I',text:'我喜欢探索科学问题，寻找事物背后的原理。'},
-    {id:12,type:'I',text:'我喜欢阅读科学类书籍和文章。'},
-    {id:13,type:'I',text:'我喜欢做实验来验证假设。'},
-    {id:14,type:'I',text:'我对数学推理和逻辑分析很感兴趣。'},
-    {id:15,type:'I',text:'我喜欢独立思考和解决复杂问题。'},
-    {id:16,type:'I',text:'我对自然现象和科学发现充满好奇。'},
-    {id:17,type:'I',text:'我喜欢用数据和事实来分析问题。'},
-    {id:18,type:'I',text:'我对编程、算法或人工智能感兴趣。'},
-    {id:19,type:'I',text:'我喜欢进行深入的研究和调查。'},
-    {id:20,type:'I',text:'我对医学研究和生物科技感兴趣。'},
-    // A - 艺术型（21-30）
-    {id:21,type:'A',text:'我喜欢绘画、雕塑、摄影等视觉艺术创作。'},
-    {id:22,type:'A',text:'我喜欢音乐，会演奏乐器或喜欢唱歌。'},
-    {id:23,type:'A',text:'我喜欢写作、诗歌或创意表达。'},
-    {id:24,type:'A',text:'我对设计和美学有独特的见解。'},
-    {id:25,type:'A',text:'我喜欢用创新的方式表达自己的想法。'},
-    {id:26,type:'A',text:'我喜欢参观美术馆、博物馆或艺术展览。'},
-    {id:27,type:'A',text:'我对戏剧、影视表演或导演感兴趣。'},
-    {id:28,type:'A',text:'我喜欢创造独特的、个性化的作品。'},
-    {id:29,type:'A',text:'我对时尚、室内设计或建筑设计感兴趣。'},
-    {id:30,type:'A',text:'我喜欢用想象力创造新的事物。'},
-    // S - 社会型（31-40）
-    {id:31,type:'S',text:'我喜欢帮助他人解决困难。'},
-    {id:32,type:'S',text:'我喜欢教学或培训他人。'},
-    {id:33,type:'S',text:'我善于倾听他人的烦恼并提供支持。'},
-    {id:34,type:'S',text:'我喜欢参加志愿活动或社区服务。'},
-    {id:35,type:'S',text:'我善于与人沟通和建立关系。'},
-    {id:36,type:'S',text:'我对心理学和人类行为很感兴趣。'},
-    {id:37,type:'S',text:'我喜欢在团队中合作完成工作。'},
-    {id:38,type:'S',text:'我对医疗护理或社会服务感兴趣。'},
-    {id:39,type:'S',text:'我喜欢组织集体活动，促进团队和谐。'},
-    {id:40,type:'S',text:'我善于理解他人的情绪和需求。'},
-    // E - 企业型（41-50）
-    {id:41,type:'E',text:'我喜欢领导和组织团队活动。'},
-    {id:42,type:'E',text:'我对商业运营和创业很感兴趣。'},
-    {id:43,type:'E',text:'我喜欢说服他人接受我的观点。'},
-    {id:44,type:'E',text:'我善于制定目标和计划来达成目的。'},
-    {id:45,type:'E',text:'我对市场营销和销售感兴趣。'},
-    {id:46,type:'E',text:'我喜欢在竞争中获得成就感。'},
-    {id:47,type:'E',text:'我善于做决策并承担风险。'},
-    {id:48,type:'E',text:'我对政治、法律或管理感兴趣。'},
-    {id:49,type:'E',text:'我喜欢在公众面前演讲或展示。'},
-    {id:50,type:'E',text:'我善于发现商机并付诸行动。'},
-    // C - 常规型（51-60）
-    {id:51,type:'C',text:'我喜欢按照既定的流程和规范工作。'},
-    {id:52,type:'C',text:'我善于整理文件和保持工作环境有序。'},
-    {id:53,type:'C',text:'我对财务、会计或审计工作感兴趣。'},
-    {id:54,type:'C',text:'我喜欢处理数据和制作报表。'},
-    {id:55,type:'C',text:'我注重细节，能够发现细微的错误。'},
-    {id:56,type:'C',text:'我喜欢在稳定、有规律的环境中工作。'},
-    {id:57,type:'C',text:'我善于按照指示准确完成任务。'},
-    {id:58,type:'C',text:'我对行政管理和办公事务感兴趣。'},
-    {id:59,type:'C',text:'我喜欢制定和执行规章制度。'},
-    {id:60,type:'C',text:'我善于管理时间和安排日程。'}
+    {id:11,type:'R',text:'我喜欢在户外进行体力活动，如登山、骑行或露营。'},
+    {id:12,type:'R',text:'我对电器的拆装和维修很感兴趣。'},
+    {id:13,type:'R',text:'我喜欢用积木、乐高或3D打印制作立体的东西。'},
+    {id:14,type:'R',text:'我对汽车、摩托车等交通工具的结构很好奇。'},
+    {id:15,type:'R',text:'我喜欢自己动手装修房间或制作家具。'},
+    {id:16,type:'R',text:'我擅长体育运动，身体协调性好。'},
+    {id:17,type:'R',text:'我对农业、园艺或养殖活动感兴趣。'},
+    {id:18,type:'R',text:'我喜欢阅读机械、电子或工程类的科普内容。'},
+    {id:19,type:'R',text:'我做事喜欢按部就班、讲求实际效果。'},
+    {id:20,type:'R',text:'我善于利用手边的材料制作实用的东西。'},
+    {id:21,type:'R',text:'我对无人机、机器人等科技产品的操控感兴趣。'},
+    {id:22,type:'R',text:'我做事注重安全规范和操作流程。'},
+    {id:23,type:'R',text:'我倾向于通过实践操作来学习新技能。'},
+    {id:24,type:'R',text:'我对地理、地质或自然环境有浓厚的兴趣。'},
+    // ==================== I - 研究型（25-48） ====================
+    {id:25,type:'I',text:'我喜欢探索科学问题，寻找事物背后的原理。'},
+    {id:26,type:'I',text:'我喜欢阅读科学类书籍和文章。'},
+    {id:27,type:'I',text:'我喜欢做实验来验证假设。'},
+    {id:28,type:'I',text:'我对数学推理和逻辑分析很感兴趣。'},
+    {id:29,type:'I',text:'我喜欢独立思考和解决复杂问题。'},
+    {id:30,type:'I',text:'我对自然现象和科学发现充满好奇。'},
+    {id:31,type:'I',text:'我喜欢用数据和事实来分析问题。'},
+    {id:32,type:'I',text:'我对编程、算法或人工智能感兴趣。'},
+    {id:33,type:'I',text:'我喜欢进行深入的研究和调查。'},
+    {id:34,type:'I',text:'我对医学研究和生物科技感兴趣。'},
+    {id:35,type:'I',text:'我喜欢阅读学术论文或研究报告。'},
+    {id:36,type:'I',text:'我善于从大量信息中归纳出规律。'},
+    {id:37,type:'I',text:'我对天文、宇宙或地球科学充满好奇。'},
+    {id:38,type:'I',text:'我喜欢设计实验来检验自己的想法。'},
+    {id:39,type:'I',text:'我对脑科学、认知科学等前沿领域感兴趣。'},
+    {id:40,type:'I',text:'我善于用图表、模型来呈现分析结果。'},
+    {id:41,type:'I',text:'我喜欢参加数学竞赛或科技创新活动。'},
+    {id:42,type:'I',text:'我遇到问题习惯先查资料再行动。'},
+    {id:43,type:'I',text:'我对考古学、历史学研究方法感兴趣。'},
+    {id:44,type:'I',text:'我喜欢在安静的环境中专注思考。'},
+    {id:45,type:'I',text:'我对化学元素和化学反应很着迷。'},
+    {id:46,type:'I',text:'我善于发现事物之间的逻辑关系。'},
+    {id:47,type:'I',text:'我喜欢用批判性思维审视各种观点。'},
+    {id:48,type:'I',text:'我对环保、生态等可持续发展议题感兴趣。'},
+    // ==================== A - 艺术型（49-72） ====================
+    {id:49,type:'A',text:'我喜欢绘画、雕塑、摄影等视觉艺术创作。'},
+    {id:50,type:'A',text:'我喜欢音乐，会演奏乐器或喜欢唱歌。'},
+    {id:51,type:'A',text:'我喜欢写作、诗歌或创意表达。'},
+    {id:52,type:'A',text:'我对设计和美学有独特的见解。'},
+    {id:53,type:'A',text:'我喜欢用创新的方式表达自己的想法。'},
+    {id:54,type:'A',text:'我喜欢参观美术馆、博物馆或艺术展览。'},
+    {id:55,type:'A',text:'我对戏剧、影视表演或导演感兴趣。'},
+    {id:56,type:'A',text:'我喜欢创造独特的、个性化的作品。'},
+    {id:57,type:'A',text:'我对时尚、室内设计或建筑设计感兴趣。'},
+    {id:58,type:'A',text:'我喜欢用想象力创造新的事物。'},
+    {id:59,type:'A',text:'我经常有丰富的灵感和创意涌现。'},
+    {id:60,type:'A',text:'我喜欢欣赏电影、话剧、音乐会等演出。'},
+    {id:61,type:'A',text:'我善于用色彩、形状表达情感。'},
+    {id:62,type:'A',text:'我对动漫、游戏等创意产业感兴趣。'},
+    {id:63,type:'A',text:'我喜欢给自己设计的作品起名字。'},
+    {id:64,type:'A',text:'我对书法、篆刻等传统艺术有兴趣。'},
+    {id:65,type:'A',text:'我做事不喜欢被条条框框束缚。'},
+    {id:66,type:'A',text:'我善于发现日常生活中的美。'},
+    {id:67,type:'A',text:'我喜欢剪辑视频或制作短片。'},
+    {id:68,type:'A',text:'我对舞蹈、肢体表达感兴趣。'},
+    {id:69,type:'A',text:'我经常用不同的角度看待同一个问题。'},
+    {id:70,type:'A',text:'我喜欢装饰自己的房间或工位。'},
+    {id:71,type:'A',text:'我对陶艺、手工制作等艺术形式感兴趣。'},
+    {id:72,type:'A',text:'我喜欢收集有美感或特别的物品。'},
+    // ==================== S - 社会型（73-96） ====================
+    {id:73,type:'S',text:'我喜欢帮助他人解决困难。'},
+    {id:74,type:'S',text:'我喜欢教学或培训他人。'},
+    {id:75,type:'S',text:'我善于倾听他人的烦恼并提供支持。'},
+    {id:76,type:'S',text:'我喜欢参加志愿活动或社区服务。'},
+    {id:77,type:'S',text:'我善于与人沟通和建立关系。'},
+    {id:78,type:'S',text:'我对心理学和人类行为很感兴趣。'},
+    {id:79,type:'S',text:'我喜欢在团队中合作完成工作。'},
+    {id:80,type:'S',text:'我对医疗护理或社会服务感兴趣。'},
+    {id:81,type:'S',text:'我喜欢组织集体活动，促进团队和谐。'},
+    {id:82,type:'S',text:'我善于理解他人的情绪和需求。'},
+    {id:83,type:'S',text:'我喜欢结交新朋友，拓展社交圈。'},
+    {id:84,type:'S',text:'我善于调解朋友之间的矛盾。'},
+    {id:85,type:'S',text:'我对教育行业充满热情。'},
+    {id:86,type:'S',text:'我喜欢照顾老人、儿童或需要帮助的人。'},
+    {id:87,type:'S',text:'我善于在众人面前分享自己的观点。'},
+    {id:88,type:'S',text:'我对社会学、人类学等人文社科感兴趣。'},
+    {id:89,type:'S',text:'我喜欢给别人提出建议和指导。'},
+    {id:90,type:'S',text:'我善于营造温馨和谐的社交氛围。'},
+    {id:91,type:'S',text:'我对公益事业和慈善活动有热情。'},
+    {id:92,type:'S',text:'我喜欢观察和分析社会现象。'},
+    {id:93,type:'S',text:'我善于用语言鼓励和激励他人。'},
+    {id:94,type:'S',text:'我对心理健康、心理咨询领域感兴趣。'},
+    {id:95,type:'S',text:'我喜欢参与讨论小组或读书会。'},
+    {id:96,type:'S',text:'我注重人与人之间的情感连接。'},
+    // ==================== E - 企业型（97-120） ====================
+    {id:97,type:'E',text:'我喜欢领导和组织团队活动。'},
+    {id:98,type:'E',text:'我对商业运营和创业很感兴趣。'},
+    {id:99,type:'E',text:'我喜欢说服他人接受我的观点。'},
+    {id:100,type:'E',text:'我善于制定目标和计划来达成目的。'},
+    {id:101,type:'E',text:'我对市场营销和销售感兴趣。'},
+    {id:102,type:'E',text:'我喜欢在竞争中获得成就感。'},
+    {id:103,type:'E',text:'我善于做决策并承担风险。'},
+    {id:104,type:'E',text:'我对政治、法律或管理感兴趣。'},
+    {id:105,type:'E',text:'我喜欢在公众面前演讲或展示。'},
+    {id:106,type:'E',text:'我善于发现商机并付诸行动。'},
+    {id:107,type:'E',text:'我经常主动发起项目或活动。'},
+    {id:108,type:'E',text:'我善于激励团队成员发挥潜力。'},
+    {id:109,type:'E',text:'我对股票、基金等投资理财感兴趣。'},
+    {id:110,type:'E',text:'我喜欢参加辩论赛或模拟商赛。'},
+    {id:111,type:'E',text:'我善于与人谈判，争取有利条件。'},
+    {id:112,type:'E',text:'我对经济新闻和商业动态保持关注。'},
+    {id:113,type:'E',text:'我喜欢设定有挑战性的目标并努力达成。'},
+    {id:114,type:'E',text:'我善于在压力下做出决策。'},
+    {id:115,type:'E',text:'我对管理学、领导力课程感兴趣。'},
+    {id:116,type:'E',text:'我喜欢规划未来并制定行动计划。'},
+    {id:117,type:'E',text:'我善于建立人脉网络和商业关系。'},
+    {id:118,type:'E',text:'我对国际贸易和全球化话题感兴趣。'},
+    {id:119,type:'E',text:'我喜欢评估风险和收益来做出选择。'},
+    {id:120,type:'E',text:'我有强烈的成功欲望和进取心。'},
+    // ==================== C - 常规型（121-144） ====================
+    {id:121,type:'C',text:'我喜欢按照既定的流程和规范工作。'},
+    {id:122,type:'C',text:'我善于整理文件和保持工作环境有序。'},
+    {id:123,type:'C',text:'我对财务、会计或审计工作感兴趣。'},
+    {id:124,type:'C',text:'我喜欢处理数据和制作报表。'},
+    {id:125,type:'C',text:'我注重细节，能够发现细微的错误。'},
+    {id:126,type:'C',text:'我喜欢在稳定、有规律的环境中工作。'},
+    {id:127,type:'C',text:'我善于按照指示准确完成任务。'},
+    {id:128,type:'C',text:'我对行政管理和办公事务感兴趣。'},
+    {id:129,type:'C',text:'我喜欢制定和执行规章制度。'},
+    {id:130,type:'C',text:'我善于管理时间和安排日程。'},
+    {id:131,type:'C',text:'我做事讲究条理，不喜欢混乱。'},
+    {id:132,type:'C',text:'我善于使用Excel等办公软件处理数据。'},
+    {id:133,type:'C',text:'我对档案管理和信息分类有兴趣。'},
+    {id:134,type:'C',text:'我喜欢核对账目，确保数字准确无误。'},
+    {id:135,type:'C',text:'我善于按照流程一步步完成任务。'},
+    {id:136,type:'C',text:'我对税务、法律等规范性工作感兴趣。'},
+    {id:137,type:'C',text:'我喜欢做清单，勾掉完成的事项让我满足。'},
+    {id:138,type:'C',text:'我善于整理归纳大量的信息。'},
+    {id:139,type:'C',text:'我对仓储管理、物流调度等感兴趣。'},
+    {id:140,type:'C',text:'我做事有始有终，不会半途而废。'},
+    {id:141,type:'C',text:'我善于执行既定的计划和安排。'},
+    {id:142,type:'C',text:'我喜欢操作专业的软件系统来处理业务。'},
+    {id:143,type:'C',text:'我对数据安全、隐私保护等话题关注。'},
+    {id:144,type:'C',text:'我善于建立和维护工作台账与记录。'}
 ];
 
 var typeInfo = {
@@ -978,7 +1062,15 @@ function showPage(page, btn) {
     document.getElementById('page-' + page).classList.add('active');
     if (btn) btn.classList.add('active');
     if (page === 'result' && currentScores) renderResults();
-    if (page === 'majors') { currentPage = 1; doFilter(); }
+    if (page === 'majors') {
+        currentPage = 1;
+        // 确保数据加载后再执行筛选
+        getCurrentData(function() {
+            renderCategorySelect();
+            renderSubcategorySelect(currentCategory);
+            doFilter();
+        });
+    }
 }
 
 // ==================== QUESTIONS ====================
@@ -1098,6 +1190,88 @@ function renderResults() {
     document.getElementById('result-detail').style.display = 'block';
 }
 
+// 显示推荐专业详情（从 majorsDB + 完整JSON数据中获取信息）
+function showMajorDetail(name) {
+    // 先从 majorsDB 获取基本信息
+    var dbMajor = null;
+    for (var i = 0; i < majorsDB.length; i++) {
+        if (majorsDB[i].name === name) { dbMajor = majorsDB[i]; break; }
+    }
+    // 尝试从完整JSON数据中补充
+    var fullMajor = null;
+    for (var lv in majorsCache) {
+        var data = majorsCache[lv];
+        if (!data) continue;
+        for (var j = 0; j < data.length; j++) {
+            if (data[j].n === name) { fullMajor = data[j]; break; }
+        }
+        if (fullMajor) break;
+    }
+
+    var html = '<div style="text-align:center;margin-bottom:20px;">' +
+        '<h2 style="color:#1e40af;">' + name + '</h2>' +
+        '<span style="background:#eff6ff;color:#1e40af;padding:4px 12px;border-radius:12px;font-size:0.9rem;">' + (fullMajor ? fullMajor.lv : '本科') + '</span> ' +
+        '<span style="background:#f0fdf4;color:#059669;padding:4px 12px;border-radius:12px;font-size:0.9rem;">' + (dbMajor ? dbMajor.category : (fullMajor ? fullMajor.c : '')) + '</span>' +
+    '</div>';
+
+    // 基本信息
+    if (dbMajor) {
+        html += '<div style="margin-bottom:16px;padding:16px;background:#f8fafc;border-radius:12px;">';
+        html += '<table style="width:100%;font-size:0.9rem;border-collapse:collapse;">';
+        if (dbMajor.code) html += '<tr><td style="padding:4px 12px 4px 0;color:#64748b;width:80px;">专业代码</td><td style="color:#1e293b;font-weight:600;">' + dbMajor.code + '</td></tr>';
+        html += '<tr><td style="padding:4px 12px 4px 0;color:#64748b;">门类</td><td style="color:#1e293b;">' + dbMajor.category + '</td></tr>';
+        if (dbMajor.degree) html += '<tr><td style="padding:4px 12px 4px 0;color:#64748b;">学位</td><td style="color:#1e293b;">' + dbMajor.degree + '</td></tr>';
+        html += '</table></div>';
+    }
+
+    // 简介
+    if (dbMajor && dbMajor.desc) {
+        html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">专业简介</h4><p style="color:#475569;font-size:0.9rem;">' + dbMajor.desc + '</p></div>';
+    }
+    // 课程
+    if (dbMajor && dbMajor.courses) {
+        html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">主要课程</h4><p style="color:#475569;font-size:0.9rem;">' + dbMajor.courses + '</p></div>';
+    }
+    // 就业
+    if (dbMajor && dbMajor.careers) {
+        html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">就业方向</h4><p style="color:#475569;font-size:0.9rem;">' + dbMajor.careers + '</p></div>';
+    }
+    // 薪资
+    if (dbMajor && dbMajor.salary) {
+        html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">薪资水平</h4><p style="color:#059669;font-weight:600;font-size:0.9rem;">' + dbMajor.salary + '</p></div>';
+    }
+    // 院校
+    if (dbMajor && dbMajor.schools) {
+        html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">推荐院校</h4><p style="color:#475569;font-size:0.9rem;">' + dbMajor.schools + '</p></div>';
+    }
+    // 霍兰德类型
+    if (dbMajor && dbMajor.types) {
+        var types = dbMajor.types.split(',').map(function(t) {
+            return typeInfo[t] ? typeInfo[t].name : t;
+        }).join('、');
+        html += '<div style="background:#fefce8;padding:12px;border-radius:8px;text-align:center;margin-top:12px;"><p style="color:#92400e;margin:0;">适合霍兰德类型：' + types + '</p></div>';
+    }
+
+    // 如果完整JSON有补充信息
+    if (fullMajor) {
+        if (!dbMajor && fullMajor.desc) {
+            html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">专业简介</h4><p style="color:#475569;font-size:0.9rem;">' + fullMajor.desc + '</p></div>';
+        }
+        if (fullMajor.goal) {
+            html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">培养目标</h4><p style="color:#475569;font-size:0.9rem;">' + fullMajor.goal + '</p></div>';
+        }
+        if (fullMajor.suitable) {
+            html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">适合学生</h4><p style="color:#475569;font-size:0.9rem;">' + fullMajor.suitable + '</p></div>';
+        }
+        if (fullMajor.postgraduate) {
+            html += '<div style="margin-bottom:16px;"><h4 style="color:#334155;margin-bottom:8px;">考研方向</h4><p style="color:#475569;font-size:0.9rem;">' + fullMajor.postgraduate + '</p></div>';
+        }
+    }
+
+    document.getElementById('report-body').innerHTML = html;
+    document.getElementById('report-modal').classList.add('show');
+}
+
 function getRecommendedMajors(top3) {
     var topTypes = top3.map(function(t) { return t[0]; });
     var results = [];
@@ -1106,11 +1280,15 @@ function getRecommendedMajors(top3) {
         var majorTypes = major.types.split(',');
         majorTypes.forEach(function(t, idx) {
             if (topTypes.indexOf(t) >= 0) {
-                match += (3 - idx) * (topTypes.length - topTypes.indexOf(t));
+                match += (majorTypes.length - idx) * (topTypes.length - topTypes.indexOf(t));
             }
         });
-        var maxPossible = 3 * 3 + 2 * 2 + 1 * 1;
-        var matchPct = Math.min(100, Math.round((match / maxPossible) * 100));
+        // 动态计算最大可能匹配分（考虑专业实际类型数量）
+        var maxPossible = 0;
+        for (var k = 0; k < Math.min(majorTypes.length, topTypes.length); k++) {
+            maxPossible += (majorTypes.length - k) * (topTypes.length - k);
+        }
+        var matchPct = maxPossible > 0 ? Math.min(100, Math.round((match / maxPossible) * 100)) : 0;
         if (matchPct >= 40) {
             results.push({name: major.name, category: major.category, match: matchPct});
         }
@@ -1264,6 +1442,8 @@ function getCurrentData(callback) {
             console.error('Failed to load majors: ' + err.message);
             document.getElementById('major-list').innerHTML = 
                 '<div style="text-align:center;padding:40px;color:var(--danger);">数据加载失败，请刷新页面重试。<br><small>' + err.message + '</small></div>';
+            // 失败时也回调（传 null），让调用方知道加载失败
+            if (callback) callback(null);
         });
 }
 
