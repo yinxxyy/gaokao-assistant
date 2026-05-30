@@ -189,27 +189,142 @@
         .question-block {
             background: #f8fafc;
             border-radius: var(--radius-sm);
-            padding: 22px 26px;
-            margin-bottom: 14px;
+            padding: 18px 22px;
+            margin-bottom: 10px;
             border-left: 4px solid var(--primary);
             transition: all 0.25s;
         }
         .question-block:hover { background: #f1f5f9; box-shadow: var(--shadow-sm); }
-        .question-text { font-size: 1.02rem; font-weight: 500; margin-bottom: 14px; color: #334155; }
-        .options { display: flex; gap: 10px; flex-wrap: wrap; }
+        .question-text { font-size: 0.98rem; font-weight: 500; margin-bottom: 12px; color: #334155; }
+        .options { display: flex; gap: 8px; flex-wrap: wrap; }
         .option-btn {
-            padding: 9px 22px;
+            padding: 8px 18px;
             border-radius: 22px;
             border: 2px solid #d1d5db;
             background: white;
             cursor: pointer;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             transition: all 0.25s;
             color: #4b5563;
             font-weight: 500;
         }
         .option-btn:hover { border-color: #818cf8; color: #4f46e5; background: #eef2ff; transform: translateY(-1px); }
         .option-btn.selected { background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; border-color: transparent; font-weight: 700; box-shadow: 0 2px 8px rgba(79,70,229,0.3); }
+        /* 分页步骤条 */
+        .step-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+        }
+        .step-dot {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+        .step-dot.inactive { background: #e2e8f0; color: #94a3b8; box-shadow: none; }
+        .step-dot.current { transform: scale(1.15); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+        .step-dot.done { opacity: 0.6; }
+        .step-line {
+            width: 32px; height: 3px;
+            background: #e2e8f0;
+            margin: 0 4px;
+            border-radius: 2px;
+            transition: background 0.3s;
+        }
+        .step-line.done { background: var(--primary); }
+        .step-label {
+            position: absolute;
+            top: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+        }
+        .step-label.current { color: #4f46e5; }
+        /* 测试内容区：左侧题目 + 右侧答题卡 */
+        .test-content {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .test-main {
+            flex: 1;
+            min-width: 0;
+        }
+        .test-sidebar {
+            width: 165px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .answer-grid-title {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+        /* 答题卡 */
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2px;
+            padding: 6px;
+            background: #f8fafc;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        .answer-cell {
+            aspect-ratio: 1;
+            min-width: 0;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: #94a3b8;
+            background: #f1f5f9;
+            border: 1.5px solid transparent;
+            padding: 0;
+        }
+        .answer-cell:hover { border-color: #818cf8; transform: scale(1.12); z-index: 1; }
+        .answer-cell.answered { background: #d1fae5; color: #059669; border-color: #6ee7b7; }
+        .answer-cell.current-page { border-color: #4f46e5; box-shadow: 0 0 0 1.5px rgba(79,70,229,0.2); }
+        .answer-cell.current-page.answered { border-color: #059669; box-shadow: 0 0 0 1.5px rgba(5,150,105,0.25); }
+        .nav-arrows {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
         .type-card {
             background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
             border-radius: var(--radius);
@@ -425,6 +540,14 @@
             .options { flex-direction: column; }
             .option-btn { text-align: center; }
             .modal { padding: 24px 18px; }
+            .step-dot { width: 34px; height: 34px; font-size: 0.85rem; }
+            .step-line { width: 16px; }
+            .step-label { font-size: 0.6rem; top: 38px; }
+            .test-content { flex-direction: column; }
+            .test-sidebar { width: 100%; position: static; max-height: none; overflow-y: visible; }
+            .answer-grid { grid-template-columns: repeat(6, 1fr); gap: 2px; padding: 6px; }
+            .answer-cell { font-size: 0.55rem; }
+            .nav-arrows { gap: 8px; }
         }
         @media print {
             body { background: white; }
@@ -440,11 +563,11 @@
 <div class="header">
     <div class="header-inner">
         <div>
-            <div class="logo">志翼<span>翱翔</span></div>
+            <div class="logo">志翼<span>翱翔高考工作室</span></div>
             <div class="subtitle">霍兰德职业兴趣测试 · 高考专业推荐</div>
         </div>
         <div class="nav-links">
-            <button class="nav-btn active" onclick="showPage('test', this)">兴趣测试</button>
+            <button class="nav-btn active" onclick="showPage('test', this)">职业测试</button>
             <button class="nav-btn" onclick="showPage('result', this)" id="nav-result">测试结果</button>
             <button class="nav-btn" onclick="showPage('majors', this)">专业查询</button>
             <button class="nav-btn" onclick="showPage('hotMajors', this)">热门专业</button>
@@ -469,8 +592,28 @@
                 <p style="text-align:center;color:var(--text-secondary);font-weight:600;" id="progress-text">0 / 144 题已完成</p>
             </div>
         </div>
-        <div id="questions-container"></div>
-        <div class="card" style="text-align:center;padding:36px;">
+        <!-- 步骤条 -->
+        <div class="step-bar" id="step-bar"></div>
+        <!-- 测试内容区（左侧题目 + 右侧答题卡） -->
+        <div class="test-content">
+            <!-- 左侧：题目区 -->
+            <div class="test-main">
+                <div id="questions-container"></div>
+                <!-- 翻页按钮 -->
+                <div class="nav-arrows" id="nav-arrows">
+                    <button class="btn btn-outline btn-sm" id="prev-page-btn" style="display:none;" onclick="prevPage()">← 上一页</button>
+                    <span id="page-indicator" style="font-weight:600;color:var(--text-secondary);font-size:0.9rem;"></span>
+                    <button class="btn btn-primary btn-sm" id="next-page-btn" onclick="nextPage()">下一页 →</button>
+                </div>
+            </div>
+            <!-- 右侧：答题卡总览 -->
+            <div class="test-sidebar">
+                <div class="answer-grid-title">答题卡</div>
+                <div class="answer-grid" id="answer-grid"></div>
+            </div>
+        </div>
+        <!-- 提交区域 -->
+        <div class="card" style="text-align:center;padding:36px;display:none;" id="submit-area">
             <button class="btn btn-primary btn-lg" onclick="submitTest()" id="submit-btn" disabled>提交测试 · 查看结果</button>
             <p style="margin-top:14px;color:var(--text-secondary);font-size:0.88rem;font-weight:500;" id="submit-hint">
                 请完成全部144道题目后再提交
@@ -1054,6 +1197,9 @@ var hotMajorsFuture = [
 // ==================== STATE ====================
 var answers = {};
 var currentScores = null;
+// 分页状态：0=R, 1=I, 2=A, 3=S, 4=E, 5=C
+var typePages = ['R', 'I', 'A', 'S', 'E', 'C'];
+var currentStep = 0;
 
 // ==================== NAVIGATION ====================
 function showPage(page, btn) {
@@ -1073,34 +1219,188 @@ function showPage(page, btn) {
     }
 }
 
-// ==================== QUESTIONS ====================
-function renderQuestions() {
-    var container = document.getElementById('questions-container');
-    container.innerHTML = '';
-    questions.forEach(function(q, idx) {
-        var div = document.createElement('div');
-        div.className = 'question-block';
-        div.innerHTML =
-            '<div class="question-text">' + (idx + 1) + '. ' + q.text + '</div>' +
-            '<div class="options">' +
-                '<button class="option-btn" onclick="selectAnswer(' + q.id + ', 5, this)">非常符合</button>' +
-                '<button class="option-btn" onclick="selectAnswer(' + q.id + ', 4, this)">比较符合</button>' +
-                '<button class="option-btn" onclick="selectAnswer(' + q.id + ', 3, this)">一般</button>' +
-                '<button class="option-btn" onclick="selectAnswer(' + q.id + ', 2, this)">不太符合</button>' +
-                '<button class="option-btn" onclick="selectAnswer(' + q.id + ', 1, this)">很不符合</button>' +
-            '</div>';
-        container.appendChild(div);
-    });
+// ==================== QUESTIONS (分页 + 答题卡) ====================
+
+// 获取指定类型的题目（按原始 questions 数组过滤）
+function getQuestionsByType(type) {
+    return questions.filter(function(q) { return q.type === type; });
 }
 
+// 渲染步骤条（R/I/A/S/E/C）
+function renderStepBar() {
+    var bar = document.getElementById('step-bar');
+    var html = '';
+    var typeColors = {R: '#e67e22', I: '#3498db', A: '#e74c3c', S: '#2ecc71', E: '#f39c12', C: '#9b59b6'};
+    var typeNames = {R: '现实型', I: '研究型', A: '艺术型', S: '社会型', E: '企业型', C: '常规型'};
+    for (var i = 0; i < typePages.length; i++) {
+        var t = typePages[i];
+        var done = isStepDone(i);
+        var dotClass = 'step-dot';
+        if (i === currentStep) {
+            dotClass += ' current';
+        } else if (done) {
+            dotClass += ' done';
+        } else {
+            dotClass += ' inactive';
+        }
+        var labelClass = 'step-label' + (i === currentStep ? ' current' : '');
+        html += '<div class="step-item" onclick="goToStep(' + i + ')">' +
+            '<div class="' + dotClass + '" style="background:' + (i === currentStep || done ? typeColors[t] : '') + '">' + t + '</div>' +
+            '<span class="' + labelClass + '">' + typeNames[t] + '</span>' +
+        '</div>';
+        if (i < typePages.length - 1) {
+            html += '<div class="step-line' + (done ? ' done' : '') + '"></div>';
+        }
+    }
+    bar.innerHTML = html;
+}
+
+// 判断某一步是否全部完成（该类型24题都已答）
+function isStepDone(step) {
+    var type = typePages[step];
+    var typeQuestions = getQuestionsByType(type);
+    for (var i = 0; i < typeQuestions.length; i++) {
+        if (!(typeQuestions[i].id in answers)) return false;
+    }
+    return true;
+}
+
+// 获取某类型已答数量
+function getAnsweredCount(type) {
+    var count = 0;
+    var typeQuestions = getQuestionsByType(type);
+    for (var i = 0; i < typeQuestions.length; i++) {
+        if (typeQuestions[i].id in answers) count++;
+    }
+    return count;
+}
+
+// 渲染答题卡总览（6×4 网格，每格代表一个题目）
+function renderAnswerGrid() {
+    var grid = document.getElementById('answer-grid');
+    var html = '';
+    // 按 types 分组展示：每行一个类型，24个小格
+    var typeColors = {R: '#e67e22', I: '#3498db', A: '#e74c3c', S: '#2ecc71', E: '#f39c12', C: '#9b59b6'};
+    for (var t = 0; t < typePages.length; t++) {
+        var type = typePages[t];
+        var qs = getQuestionsByType(type);
+        // 每行显示一个类型标签
+        html += '<div style="grid-column:1/-1;font-size:0.75rem;font-weight:700;color:' + typeColors[type] + ';margin-top:4px;">' + type + '</div>';
+        for (var j = 0; j < qs.length; j++) {
+            var qid = qs[j].id;
+            var answered = qid in answers;
+            var isCurrentPage = (t === currentStep);
+            var cls = 'answer-cell';
+            if (answered) cls += ' answered';
+            if (isCurrentPage) cls += ' current-page';
+            html += '<div class="' + cls + '" onclick="goToStep(' + t + ')" title="第' + qid + '题' + (answered ? ' ✓已答' : '') + '">' + qid + '</div>';
+        }
+    }
+    grid.innerHTML = html;
+}
+
+// 渲染当前页题目（当前类型24题）
+function renderCurrentPage() {
+    var container = document.getElementById('questions-container');
+    container.innerHTML = '';
+    var type = typePages[currentStep];
+    var qs = getQuestionsByType(type);
+    for (var i = 0; i < qs.length; i++) {
+        var q = qs[i];
+        var globalIdx = 0;
+        for (var k = 0; k < questions.length; k++) {
+            if (questions[k].id === q.id) { globalIdx = k + 1; break; }
+        }
+        var div = document.createElement('div');
+        div.className = 'question-block';
+        var selectedScore = answers[q.id];
+        div.innerHTML =
+            '<div class="question-text">' + globalIdx + '. ' + q.text + '</div>' +
+            '<div class="options">' +
+                '<button class="option-btn' + (selectedScore === 5 ? ' selected' : '') + '" onclick="selectAnswer(' + q.id + ', 5, this)">非常符合</button>' +
+                '<button class="option-btn' + (selectedScore === 4 ? ' selected' : '') + '" onclick="selectAnswer(' + q.id + ', 4, this)">比较符合</button>' +
+                '<button class="option-btn' + (selectedScore === 3 ? ' selected' : '') + '" onclick="selectAnswer(' + q.id + ', 3, this)">一般</button>' +
+                '<button class="option-btn' + (selectedScore === 2 ? ' selected' : '') + '" onclick="selectAnswer(' + q.id + ', 2, this)">不太符合</button>' +
+                '<button class="option-btn' + (selectedScore === 1 ? ' selected' : '') + '" onclick="selectAnswer(' + q.id + ', 1, this)">很不符合</button>' +
+            '</div>';
+        container.appendChild(div);
+    }
+    // 滚动到顶部
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// 跳转到指定步骤
+function goToStep(step) {
+    if (step < 0 || step >= typePages.length) return;
+    currentStep = step;
+    refreshAll();
+}
+
+// 上一页
+function prevPage() {
+    if (currentStep > 0) {
+        currentStep--;
+        refreshAll();
+    }
+}
+
+// 下一页
+function nextPage() {
+    if (currentStep < typePages.length - 1) {
+        currentStep++;
+        refreshAll();
+    }
+}
+
+// 刷新所有UI（步骤条+答题卡+当前页题目+导航按钮+提交区）
+function refreshAll() {
+    renderStepBar();
+    renderAnswerGrid();
+    renderCurrentPage();
+    updateNavButtons();
+    updateSubmitArea();
+}
+
+// 更新翻页按钮状态
+function updateNavButtons() {
+    var prevBtn = document.getElementById('prev-page-btn');
+    var nextBtn = document.getElementById('next-page-btn');
+    var indicator = document.getElementById('page-indicator');
+    var type = typePages[currentStep];
+    var typeNames = {R: '现实型 R', I: '研究型 I', A: '艺术型 A', S: '社会型 S', E: '企业型 E', C: '常规型 C'};
+    var answered = getAnsweredCount(type);
+    indicator.textContent = typeNames[type] + ' (' + answered + '/24 已答)';
+    prevBtn.style.display = currentStep === 0 ? 'none' : 'inline-flex';
+    if (currentStep === typePages.length - 1) {
+        nextBtn.textContent = '完成';
+        nextBtn.style.display = 'none'; // 最后一页隐藏"下一页"，显示提交按钮
+    } else {
+        nextBtn.textContent = '下一页 →';
+        nextBtn.style.display = 'inline-flex';
+    }
+}
+
+// 更新提交区域显示（最后一页才显示，全部答完才可点击）
+function updateSubmitArea() {
+    var area = document.getElementById('submit-area');
+    var isLast = currentStep === typePages.length - 1;
+    area.style.display = isLast ? '' : 'none';
+    updateProgress();
+}
+
+// 选择答案
 function selectAnswer(qid, score, btn) {
     answers[qid] = score;
+    // 更新当前题目的选中状态
     var parent = btn.parentElement;
     parent.querySelectorAll('.option-btn').forEach(function(b) { b.classList.remove('selected'); });
     btn.classList.add('selected');
     updateProgress();
+    // 同时刷新答题卡对应格子
+    renderAnswerGrid();
 }
 
+// 更新进度条和提交按钮状态
 function updateProgress() {
     var answered = Object.keys(answers).length;
     var total = questions.length;
@@ -1118,11 +1418,42 @@ function updateProgress() {
         hint.textContent = '请完成全部' + total + '道题目后再提交（还剩' + (total - answered) + '题）';
         hint.style.color = '#64748b';
     }
+    // 更新步骤条完成状态
+    renderStepBar();
 }
 
+// 提交测试（改为定位到第一页未完成的页）
 function submitTest() {
     if (Object.keys(answers).length < questions.length) {
-        alert('请完成全部题目后再提交！');
+        // 找到第一个未完成的步骤
+        for (var i = 0; i < typePages.length; i++) {
+            if (!isStepDone(i)) {
+                // 跳转到该步骤
+                currentStep = i;
+                refreshAll();
+                // 找到第一个未答的题目并闪烁
+                var type = typePages[i];
+                var qs = getQuestionsByType(type);
+                for (var j = 0; j < qs.length; j++) {
+                    if (!(qs[j].id in answers)) {
+                        setTimeout(function() {
+                            var blocks = document.querySelectorAll('#questions-container .question-block');
+                            if (blocks[j]) {
+                                blocks[j].style.borderLeftColor = '#dc2626';
+                                blocks[j].style.background = '#fef2f2';
+                                blocks[j].scrollIntoView({behavior: 'smooth', block: 'center'});
+                                setTimeout(function() {
+                                    blocks[j].style.borderLeftColor = '';
+                                    blocks[j].style.background = '';
+                                }, 2000);
+                            }
+                        }, 200);
+                        break;
+                    }
+                }
+                return;
+            }
+        }
         return;
     }
     var scores = {R:0,I:0,A:0,S:0,E:0,C:0};
@@ -1133,6 +1464,13 @@ function submitTest() {
     renderResults();
     showPage('result', document.getElementById('nav-result'));
     document.getElementById('page-result').scrollIntoView({behavior:'smooth'});
+}
+
+// 原来的 renderQuestions 改为分页渲染入口
+function renderQuestions() {
+    currentStep = 0;
+    refreshAll();
+    updateProgress();
 }
 
 // ==================== RESULTS ====================
@@ -1148,7 +1486,7 @@ function renderResults() {
     scoresCard.innerHTML = '<h2>六种类型得分</h2>';
     Object.keys(typeInfo).forEach(function(key) {
         var info = typeInfo[key];
-        var pct = Math.round((scores[key] / 50) * 100);
+        var pct = Math.round((scores[key] / 120) * 100);
         var isTop = top3.some(function(t) { return t[0] === key; });
         scoresCard.innerHTML +=
             '<div class="type-card' + (isTop ? ' high' : '') + '">' +
@@ -1309,7 +1647,7 @@ function openReport() {
     var scoresHTML = '';
     Object.keys(typeInfo).forEach(function(key) {
         var info = typeInfo[key];
-        var pct = Math.round((scores[key] / 50) * 100);
+        var pct = Math.round((scores[key] / 120) * 100);
         var isTop = top3.some(function(t) { return t[0] === key; });
         scoresHTML +=
             '<div style="margin-bottom:10px;' + (isTop ? 'background:#f0fdf4;padding:10px;border-radius:8px;' : '') + '">' +
